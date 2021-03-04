@@ -11,12 +11,13 @@ namespace InvoiceProject
 
         public void AddInvoiceLine(InvoiceLine invoiceLine)
         {
+	        LineItems = new List<InvoiceLine>();
             LineItems.Add(invoiceLine);
         }
 
         public void RemoveInvoiceLine(int SOMEID)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -24,7 +25,8 @@ namespace InvoiceProject
         /// </summary>
         public decimal GetTotal()
         {
-            throw new NotImplementedException();
+	        return 0.0m;
+	        //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace InvoiceProject
         /// <param name="sourceInvoice">Invoice to merge from</param>
         public void MergeInvoices(Invoice sourceInvoice)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -41,7 +43,14 @@ namespace InvoiceProject
         /// </summary>
         public Invoice Clone()
         {
-            throw new NotImplementedException();
+	        return new Invoice()
+	        {
+		        InvoiceDate = this.InvoiceDate,
+		        InvoiceNumber = this.InvoiceNumber,
+		        LineItems = this.LineItems
+	        };
+
+	        // throw new NotImplementedException();
         }
 
         /// <summary>
@@ -50,7 +59,8 @@ namespace InvoiceProject
         /// </summary>
         public override string ToString()
         {
-            throw new NotImplementedException();
+	        return $"InvoiceNumber: {InvoiceNumber}, InvoiceDate: {InvoiceDate:dd/MM/yyy}, LineItemCount: {LineItems.Count}";
+	        //throw new NotImplementedException();
         }
     }
 }
