@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InvoiceProject
 {
@@ -11,14 +12,16 @@ namespace InvoiceProject
 
         public void AddInvoiceLine(InvoiceLine invoiceLine)
         {
-	        LineItems = new List<InvoiceLine>();
+            //Check if invoice line has been initiated if not initiate it with an empty list.
+            LineItems ??= new List<InvoiceLine>();
+
             LineItems.Add(invoiceLine);
         }
 
         public void RemoveInvoiceLine(int SOMEID)
         {
             //throw new NotImplementedException();
-        }
+        }   
 
         /// <summary>
         /// GetTotal should return the sum of (Cost * Quantity) for each line item
