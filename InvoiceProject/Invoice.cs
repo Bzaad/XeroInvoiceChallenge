@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace InvoiceProject
 {
@@ -9,6 +8,13 @@ namespace InvoiceProject
         public int InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public List<InvoiceLine> LineItems { get; set; }
+
+        public Invoice(int invoiceNumber, DateTime invoiceDate, List<InvoiceLine> lineItems)
+        {
+	        InvoiceNumber = invoiceNumber;
+	        InvoiceDate = invoiceDate;
+	        LineItems = lineItems;
+        }
 
         public void AddInvoiceLine(InvoiceLine invoiceLine)
         {
@@ -20,7 +26,7 @@ namespace InvoiceProject
 
         public void RemoveInvoiceLine(int SOMEID)
         {
-            //throw new NotImplementedException();
+	        LineItems.RemoveAll(x => x.InvoiceLineId == SOMEID);
         }   
 
         /// <summary>
@@ -28,8 +34,9 @@ namespace InvoiceProject
         /// </summary>
         public decimal GetTotal()
         {
-	        return 0.0m;
-	        //throw new NotImplementedException();
+	        var total = 0m;
+	        LineItems.ForEach(x => total += ((decimal)x.Cost * x.Quantity));
+	        return total;
         }
 
         /// <summary>
