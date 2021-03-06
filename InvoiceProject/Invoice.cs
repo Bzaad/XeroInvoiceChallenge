@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace InvoiceProject
 {
-	[Serializable]
-    public class Invoice
+	public class Invoice
     {
         public int InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
@@ -26,10 +23,10 @@ namespace InvoiceProject
         /// <summary>
         /// Removes the InvoiceLine with the given id from LineItems.
         /// </summary>
-        /// <param name="SOMEID">The id of the InvoiceLine being removed</param>
-        public void RemoveInvoiceLine(int SOMEID)
+        /// <param name="someId">The id of the InvoiceLine being removed</param>
+        public void RemoveInvoiceLine(int someId)
         {
-	        LineItems.RemoveAll(x => x.InvoiceLineId == SOMEID);
+	        LineItems.RemoveAll(x => x.InvoiceLineId == someId);
         }   
 
         /// <summary>
@@ -56,7 +53,7 @@ namespace InvoiceProject
         /// </summary>
         public Invoice Clone()
         {
-            /*
+            
 	        Invoice other = (Invoice) this.MemberwiseClone();
 	        other.InvoiceNumber = InvoiceNumber;
 	        other.InvoiceDate = InvoiceDate;
@@ -73,8 +70,6 @@ namespace InvoiceProject
                 other.LineItems.Add(lineItem);
             });
             return other;
-            */
-            return this.DeepClone();
         }
 
         /// <summary>
