@@ -62,7 +62,7 @@ namespace InvoiceProject
 			invoice.AddInvoiceLine(new InvoiceLine()
 			{
 				InvoiceLineId = 1,
-				Cost = 10.21m,
+				Cost = 10.21,
 				Quantity = 4,
 				Description = "Banana"
 			});

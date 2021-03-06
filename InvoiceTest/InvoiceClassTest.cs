@@ -46,5 +46,61 @@ namespace InvoiceProjectTest
 
 			Assert.Equal("InvoiceNumber: 100, InvoiceDate: 05/04/2022, LineItemCount: 1", invoice.ToString());
 		}
+
+		[Fact]
+		public void Test_TypeCasting()
+		{
+			var invoice = new Invoice()
+			{
+				InvoiceDate = DateTime.Now,
+				InvoiceNumber = 101,
+				LineItems = new List<InvoiceLine>()
+				{
+					new InvoiceLine() {Cost = 125.5, Description = "some description", InvoiceLineId = 201, Quantity = 20}
+				}
+			};
+		}
+
+		/// <summary>
+		/// Tests if a deep clone of the Invoice object is correctly performed.
+		/// </summary>
+		[Fact]
+		public void Test_InvoiceDeepClone_CorrectlyCreatesADeepCloneOfInvoice()
+		{
+			var invoice = new Invoice()
+			{
+				InvoiceDate = DateTime.Now,
+				InvoiceNumber = 2,
+				LineItems = new List<InvoiceLine>()
+				{
+					new InvoiceLine(){Cost = 4.5, Description = "First Line Item", InvoiceLineId =  21, Quantity = 1},
+					new InvoiceLine(){Cost = 10.67, Description = "Second Line Item", InvoiceLineId = 22, Quantity = 2}
+				}
+			};
+
+			var clonedInvoice = invoice.Clone();
+
+			Assert.Equal(invoice.InvoiceNumber, clonedInvoice.InvoiceNumber);
+			Assert.Equal(invoice.InvoiceDate, clonedInvoice.InvoiceDate);
+
+			invoice.LineItems.ForEach(x =>
+			{
+				Assert.True(clonedInvoice.LineItems.Exists(y => y.InvoiceLineId == x.InvoiceLineId));
+				Assert.True(clonedInvoice.LineItems.Exists(y => y.Description == x.Description));
+				Assert.True(clonedInvoice.LineItems.Exists(y => y.Quantity == x.Quantity));
+				Assert.True(clonedInvoice.LineItems.Exists(y => y.Cost == x.Cost));
+			});
+
+			clonedInvoice.InvoiceNumber = 20;
+			Assert.NotEqual(invoice.InvoiceNumber, clonedInvoice.InvoiceNumber);
+
+			invoice.InvoiceDate = invoice.InvoiceDate.AddDays(1);
+			Assert.NotEqual(invoice.InvoiceDate, clonedInvoice.InvoiceDate);
+
+			clonedInvoice.LineItems.ForEach(x =>
+			{
+
+			});
+		}
 	}
 }

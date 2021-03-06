@@ -1,29 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace InvoiceProject
 {
+	[Serializable]
     public class Invoice
     {
         public int InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public List<InvoiceLine> LineItems { get; set; }
 
-        public Invoice(int invoiceNumber, DateTime invoiceDate, List<InvoiceLine> lineItems)
-        {
-	        InvoiceNumber = invoiceNumber;
-	        InvoiceDate = invoiceDate;
-	        LineItems = lineItems;
-        }
-
+        /// <summary>
+        /// Adds the given InvoiceLine to LineItems.
+        /// </summary>
+        /// <param name="invoiceLine">The InvoiceLine being added</param>
         public void AddInvoiceLine(InvoiceLine invoiceLine)
         {
             //Check if invoice line has been initiated if not initiate it with an empty list.
             LineItems ??= new List<InvoiceLine>();
-
             LineItems.Add(invoiceLine);
         }
 
+        /// <summary>
+        /// Removes the InvoiceLine with the given id from LineItems.
+        /// </summary>
+        /// <param name="SOMEID">The id of the InvoiceLine being removed</param>
         public void RemoveInvoiceLine(int SOMEID)
         {
 	        LineItems.RemoveAll(x => x.InvoiceLineId == SOMEID);
@@ -45,7 +48,7 @@ namespace InvoiceProject
         /// <param name="sourceInvoice">Invoice to merge from</param>
         public void MergeInvoices(Invoice sourceInvoice)
         {
-            //throw new NotImplementedException();
+	        LineItems.AddRange(sourceInvoice.LineItems);
         }
 
         /// <summary>
@@ -53,14 +56,25 @@ namespace InvoiceProject
         /// </summary>
         public Invoice Clone()
         {
-	        return new Invoice()
-	        {
-		        InvoiceDate = this.InvoiceDate,
-		        InvoiceNumber = this.InvoiceNumber,
-		        LineItems = this.LineItems
-	        };
-
-	        // throw new NotImplementedException();
+            /*
+	        Invoice other = (Invoice) this.MemberwiseClone();
+	        other.InvoiceNumber = InvoiceNumber;
+	        other.InvoiceDate = InvoiceDate;
+	        other.LineItems = new List<InvoiceLine>();
+            LineItems.ForEach(x =>
+            {
+	            var lineItem = new InvoiceLine()
+	            {
+                    Cost = x.Cost,
+					Description = x.Description,
+                    InvoiceLineId = x.InvoiceLineId,
+                    Quantity = x.Quantity
+	            };
+                other.LineItems.Add(lineItem);
+            });
+            return other;
+            */
+            return this.DeepClone();
         }
 
         /// <summary>
@@ -70,7 +84,6 @@ namespace InvoiceProject
         public override string ToString()
         {
 	        return $"InvoiceNumber: {InvoiceNumber}, InvoiceDate: {InvoiceDate:dd/MM/yyy}, LineItemCount: {LineItems.Count}";
-	        //throw new NotImplementedException();
         }
     }
 }
