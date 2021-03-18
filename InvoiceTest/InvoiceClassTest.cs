@@ -260,5 +260,13 @@ namespace InvoiceProjectTest
 
 			Assert.Equal("InvoiceNumber: 100, InvoiceDate: 05/04/2022, LineItemCount: 1", invoice.ToString());
 		}
+
+		[Fact]
+		public void Test_TaxType()
+        {
+			var tax = new Tax<NZTax>(new NZTax(new DateTime(2011,1,1)));
+			var taxValue = tax.GetTaxValue(1000);
+			Assert.Equal(125, taxValue);
+        }
 	}
 }

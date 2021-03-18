@@ -38,6 +38,7 @@ namespace InvoiceProject
 			MergeInvoices();
 			CloneInvoice();
 			InvoiceToString();
+			stringListToIntList();
 		}
 
 		private static void CreateInvoiceWithOneItem()
@@ -188,5 +189,12 @@ namespace InvoiceProject
 
 			Console.WriteLine(invoice.ToString());
 		}
+
+		private static void stringListToIntList()
+        {
+			var invoice = new Invoice();
+			var stList = new List<string> { "1", "2", "10", "biz", "12", "camel" };
+			invoice.ReturnIntegerListFromString(stList).ForEach(x => Console.WriteLine(x));
+        }
 	}
 }

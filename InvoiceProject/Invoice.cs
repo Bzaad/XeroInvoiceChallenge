@@ -80,5 +80,17 @@ namespace InvoiceProject
         {
 	        return $"InvoiceNumber: {InvoiceNumber}, InvoiceDate: {InvoiceDate:dd/MM/yyy}, LineItemCount: {LineItems.Count}";
         }
+
+        public List<int> ReturnIntegerListFromString(List<string> stringList)
+        {
+            var intList = new List<int>();
+
+            stringList.ForEach(s =>
+            {
+                if (int.TryParse(s, out int st)) intList.Add(st);
+            });
+
+            return intList;
+        }
     }
 }
